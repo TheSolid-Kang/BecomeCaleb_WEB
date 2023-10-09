@@ -1,5 +1,4 @@
-﻿using BecomeCaleb_WEB.Migration;
-using BecomeCaleb_WEB.Models;
+﻿using BecomeCaleb_WEB.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -16,14 +15,6 @@ namespace BecomeCaleb_WEB.Controllers
 
         public IActionResult Index()
         {
-            using(var db = new CalebContext())
-            {
-                var temp = db._TCDiaries.ToList();
-                foreach(var tempItem in temp)
-                {
-                    Console.WriteLine(tempItem.Record);
-                }
-            }
             return View();
         }
 

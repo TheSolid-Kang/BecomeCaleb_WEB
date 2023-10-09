@@ -3,59 +3,56 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using BecomeCaleb_WEB.Models.CalebTbl;
+using IndexAttribute = Microsoft.EntityFrameworkCore.IndexAttribute;
 
-namespace BecomeCaleb_WEB.Models
+namespace BecomeCaleb_WEB.Models.CalebTbl
 {
     /// <summary>
-    /// 사용자마스터
+    /// 미션
     /// </summary>
-    [Table("_TCUser")]
-    public partial class _TCUser
+    [Table("_TCMission")]
+    [Index(nameof(ChurchSeq), nameof(DiarySeq), Name = "TNPK_TCMission")]
+    public partial class _TCMission
     {
 
         /// <summary>
         /// 교회내부코드
         /// </summary>
-        [Key]
         public int ChurchSeq { get; set; }
 
         /// <summary>
-        /// 사용자코드
+        /// 일기내부코드
+        /// </summary>
+        public int? DiarySeq { get; set; }
+
+        /// <summary>
+        /// 미션내부코드
         /// </summary>
         [Key]
-        public int UserSeq { get; set; }
+        public int MissionSeq { get; set; }
 
         /// <summary>
-        /// 계정
+        /// 미션제목
+        /// </summary>
+        [StringLength(512)]
+        public string? Title { get; set; }
+
+        /// <summary>
+        /// 미션Major-Minor코드
+        /// </summary>
+        public int? CategoryMMCode { get; set; }
+
+        /// <summary>
+        /// 미션결과
+        /// </summary>
+        public byte? Result { get; set; }
+
+        /// <summary>
+        /// 비고
         /// </summary>
         [StringLength(200)]
-        public string ResidID { get; set; }
-
-        /// <summary>
-        /// 사용자명
-        /// </summary>
-        [StringLength(100)]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// 사용자번호
-        /// </summary>
-        [StringLength(20)]
-        public string Empid { get; set; }
-
-        /// <summary>
-        /// 관리자여부(1 == 관리자, 0 == 일반)
-        /// </summary>
-        [Required]
-        [StringLength(1)]
-        public string IsAdministrator { get; set; }
-
-        /// <summary>
-        /// 구원여부(1 == 성도, 0 == 일반)
-        /// </summary>
-        [Required]
-        [StringLength(1)]
-        public string IsSaved { get; set; }
+        public string? Remark { get; set; }
 
         /// <summary>
         /// 최종작업자
@@ -69,3 +66,4 @@ namespace BecomeCaleb_WEB.Models
         public DateTime? LastDateTime { get; set; }
     }
 }
+

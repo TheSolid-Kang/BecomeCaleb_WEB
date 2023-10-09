@@ -3,49 +3,59 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using BecomeCaleb_WEB.Models.CalebTbl;
 
-namespace BecomeCaleb_WEB.Models
+
+namespace BecomeCaleb_WEB.Models.CalebTbl
 {
     /// <summary>
-    /// 일기
+    /// 사용자마스터
     /// </summary>
-    [Table("_TCDiary")]
-    public partial class _TCDiary
+    [Table("_TCUser")]
+    public partial class _TCUser
     {
 
         /// <summary>
         /// 교회내부코드
         /// </summary>
+        [Key]
         public int ChurchSeq { get; set; }
 
         /// <summary>
-        /// 일기내부코드
+        /// 사용자코드
         /// </summary>
         [Key]
-        public int DiarySeq { get; set; }
+        public int UserSeq { get; set; }
 
         /// <summary>
-        /// 일자
-        /// </summary>
-        [Column(TypeName = "date")]
-        public DateTime? InDate { get; set; }
-
-        /// <summary>
-        /// 일기제목
-        /// </summary>
-        [StringLength(256)]
-        public string Title { get; set; }
-
-        /// <summary>
-        /// 일기본문
-        /// </summary>
-        public string Record { get; set; }
-
-        /// <summary>
-        /// 비고
+        /// 계정
         /// </summary>
         [StringLength(200)]
-        public string Remark { get; set; }
+        public string? ResidID { get; set; }
+
+        /// <summary>
+        /// 사용자명
+        /// </summary>
+        [StringLength(100)]
+        public string? UserName { get; set; }
+
+        /// <summary>
+        /// 사용자번호
+        /// </summary>
+        [StringLength(20)]
+        public string? Empid { get; set; }
+
+        /// <summary>
+        /// 관리자여부(1 == 관리자, 0 == 일반)
+        /// </summary>
+        [StringLength(1)]
+        public string IsAdministrator { get; set; } = null!;
+
+        /// <summary>
+        /// 구원여부(1 == 성도, 0 == 일반)
+        /// </summary>
+        [StringLength(1)]
+        public string IsSaved { get; set; } = null!;
 
         /// <summary>
         /// 최종작업자
@@ -59,3 +69,4 @@ namespace BecomeCaleb_WEB.Models
         public DateTime? LastDateTime { get; set; }
     }
 }
+

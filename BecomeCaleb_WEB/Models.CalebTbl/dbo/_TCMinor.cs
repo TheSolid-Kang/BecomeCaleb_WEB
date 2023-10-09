@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using BecomeCaleb_WEB.Models.CalebTbl;
 using IndexAttribute = Microsoft.EntityFrameworkCore.IndexAttribute;
 
-namespace BecomeCaleb_WEB.Models
+namespace BecomeCaleb_WEB.Models.CalebTbl
 {
     /// <summary>
-    /// 미션
+    /// 시스템 제공 기타코드 소분류
     /// </summary>
-    [Table("_TCMission")]
-    [Index(nameof(ChurchSeq), nameof(DiarySeq), Name = "TNPK_TCMission")]
-    public partial class _TCMission
+    [Keyless]
+    [Table("_TCMinor")]
+    [Index(nameof(MajorSeq), nameof(MinorSeq), Name = "_TCMinor_NIndex")]
+    public partial class _TCMinor
     {
 
         /// <summary>
@@ -21,47 +23,37 @@ namespace BecomeCaleb_WEB.Models
         public int ChurchSeq { get; set; }
 
         /// <summary>
-        /// 일기내부코드
+        /// 대분류코드
         /// </summary>
-        public int? DiarySeq { get; set; }
+        public int MajorSeq { get; set; }
 
         /// <summary>
-        /// 미션내부코드
+        /// 소분류코드
         /// </summary>
-        [Key]
-        public int MissionSeq { get; set; }
+        public int MinorSeq { get; set; }
 
         /// <summary>
-        /// 미션제목
+        /// 소분류명
         /// </summary>
-        [StringLength(512)]
-        public string Title { get; set; }
-
-        /// <summary>
-        /// 미션Major-Minor코드
-        /// </summary>
-        public int? CategoryMMCode { get; set; }
-
-        /// <summary>
-        /// 미션결과
-        /// </summary>
-        public byte? Result { get; set; }
+        [StringLength(200)]
+        public string MinorName { get; set; } = null!;
 
         /// <summary>
         /// 비고
         /// </summary>
         [StringLength(200)]
-        public string Remark { get; set; }
+        public string? Remark { get; set; }
 
         /// <summary>
         /// 최종작업자
         /// </summary>
-        public int? LastUserSeq { get; set; }
+        public int LastUserSeq { get; set; }
 
         /// <summary>
         /// 최종작업일시
         /// </summary>
         [Column(TypeName = "datetime")]
-        public DateTime? LastDateTime { get; set; }
+        public DateTime LastDateTime { get; set; }
     }
 }
+

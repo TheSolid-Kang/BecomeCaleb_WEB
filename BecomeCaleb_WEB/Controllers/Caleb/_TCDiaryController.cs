@@ -5,20 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BecomeCaleb_WEB.Migration;
-using BecomeCaleb_WEB.Models;
+using BecomeCaleb_WEB.Models.CalebTbl;
+using BecomeCaleb_WEB.Models.CalebTbl;
+using ASPMVC_Practice.Controllers;
 
-namespace BecomeCaleb_WEB.Controllers
+namespace BecomeCaleb_WEB.Controllers.Caleb
 {
-    public class _TCDiaryController : Controller
+    public class _TCDiaryController : BaseController<_TCDiaryController>
     {
         private readonly CalebContext _context;
 
-        public _TCDiaryController(CalebContext context)
+        public _TCDiaryController(ILogger<_TCDiaryController> logger) : base(logger)
         {
-            _context = context;
+            _context = new CalebContext();
         }
 
+        /*231009: context를 받아온는 코드가 없으므로 삭제해야함.
+public _TCDiaryController(CalebContext context)
+{
+   _context = context;
+}
+*/
         // GET: _TCDiary
         public async Task<IActionResult> Index()
         {

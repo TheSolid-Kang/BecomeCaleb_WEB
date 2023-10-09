@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using IndexAttribute = Microsoft.EntityFrameworkCore.IndexAttribute;
+using BecomeCaleb_WEB.Models.CalebTbl;
 
-namespace BecomeCaleb_WEB.Models
+
+namespace BecomeCaleb_WEB.Models.CalebTbl
 {
     /// <summary>
-    /// 시스템 제공 기타코드 소분류
+    /// 일기
     /// </summary>
-    [Keyless]
-    [Table("_TCMinor")]
-    [Index(nameof(MajorSeq), nameof(MinorSeq), Name = "_TCMinor_NIndex")]
-    public partial class _TCMinor
+    [Table("_TCDiary")]
+    public partial class _TCDiary
     {
 
         /// <summary>
@@ -22,37 +21,44 @@ namespace BecomeCaleb_WEB.Models
         public int ChurchSeq { get; set; }
 
         /// <summary>
-        /// 대분류코드
+        /// 일기내부코드
         /// </summary>
-        public int MajorSeq { get; set; }
+        [Key]
+        public int DiarySeq { get; set; }
 
         /// <summary>
-        /// 소분류코드
+        /// 일자
         /// </summary>
-        public int MinorSeq { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? InDate { get; set; }
 
         /// <summary>
-        /// 소분류명
+        /// 일기제목
         /// </summary>
-        [Required]
-        [StringLength(200)]
-        public string MinorName { get; set; }
+        [StringLength(256)]
+        public string? Title { get; set; }
+
+        /// <summary>
+        /// 일기본문
+        /// </summary>
+        public string? Record { get; set; }
 
         /// <summary>
         /// 비고
         /// </summary>
         [StringLength(200)]
-        public string Remark { get; set; }
+        public string? Remark { get; set; }
 
         /// <summary>
         /// 최종작업자
         /// </summary>
-        public int LastUserSeq { get; set; }
+        public int? LastUserSeq { get; set; }
 
         /// <summary>
         /// 최종작업일시
         /// </summary>
         [Column(TypeName = "datetime")]
-        public DateTime LastDateTime { get; set; }
+        public DateTime? LastDateTime { get; set; }
     }
 }
+

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using BecomeCaleb_WEB.Models.CalebTbl;
 
-namespace BecomeCaleb_WEB.Models
+
+namespace BecomeCaleb_WEB.Models.CalebTbl
 {
     /// <summary>
     /// 사용자마스터
@@ -23,7 +25,7 @@ namespace BecomeCaleb_WEB.Models
         /// 검색어
         /// </summary>
         [StringLength(512)]
-        public string SearchKeyword { get; set; }
+        public string? SearchKeyword { get; set; }
 
         /// <summary>
         /// 최종작업자
@@ -37,3 +39,4 @@ namespace BecomeCaleb_WEB.Models
         public DateTime? LastDateTime { get; set; }
     }
 }
+

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migration\" />
     <Folder Include="Models\CalebTbl\" />
     <Folder Include="Views\Diary\" />
   </ItemGroup>

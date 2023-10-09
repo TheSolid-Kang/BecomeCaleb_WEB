@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BecomeCaleb_WEB.Models;
+using BecomeCaleb_WEB.Models.CalebTbl;
+using BecomeCaleb_WEB.Models.CalebTbl;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 

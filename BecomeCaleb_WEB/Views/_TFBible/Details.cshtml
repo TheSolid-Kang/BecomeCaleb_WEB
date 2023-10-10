@@ -1,0 +1,42 @@
+﻿@model BecomeCaleb_WEB.Models.TwoMitesTbl.dboSchema._TFBible
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>_TFBible</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Testament)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Testament)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Chapter)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Chapter)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Verse)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Verse)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descript)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descript)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.BibleSeq">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,13 +1,13 @@
 ﻿{
    "CodeGenerationMode": 3,
-   "ContextClassName": "CalebContext",
+   "ContextClassName": "TwoMitesContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": true,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models.CalebTbl",
+   "OutputPath": "Models.TwoMitesTbl",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "BecomeCaleb_WEB",
    "Schemas": null,
@@ -16,31 +16,39 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[_TCDiary]",
+         "Name": "[dbo].[_TestTbl]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[_TCMajor]",
+         "Name": "[dbo].[_TestTbl２]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[_TCMinor]",
+         "Name": "[dbo].[_TFAMajor]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[_TCMission]",
+         "Name": "[dbo].[_TFAMinor]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[_TCSearchRecord]",
+         "Name": "[dbo].[_TFBible]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[_TCUser]",
+         "Name": "[dbo].[_TFMajor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[_TFMinor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[_TFUser]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "desktop-mg0atf4.Caleb.dbo",
+   "UiHint": "c-1482.TwoMites.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": true,
    "UseDatabaseNames": true,

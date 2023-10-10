@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BecomeCaleb_WEB", "BecomeCaleb_WEB\BecomeCaleb_WEB.csproj", "{5A0EC815-E5EC-42D3-8D76-7DADC767A02E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "..\..\ASPMVC_Practice\CSharp-Engine\Engine.csproj", "{180882BC-83BC-456B-8D75-7B8E9A2FA91B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "CSharp-Engine\Engine.csproj", "{19C071FC-64C8-4DF2-AFDD-8B65D905FF8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5A0EC815-E5EC-42D3-8D76-7DADC767A02E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A0EC815-E5EC-42D3-8D76-7DADC767A02E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A0EC815-E5EC-42D3-8D76-7DADC767A02E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{180882BC-83BC-456B-8D75-7B8E9A2FA91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{180882BC-83BC-456B-8D75-7B8E9A2FA91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{180882BC-83BC-456B-8D75-7B8E9A2FA91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{180882BC-83BC-456B-8D75-7B8E9A2FA91B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19C071FC-64C8-4DF2-AFDD-8B65D905FF8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19C071FC-64C8-4DF2-AFDD-8B65D905FF8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19C071FC-64C8-4DF2-AFDD-8B65D905FF8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19C071FC-64C8-4DF2-AFDD-8B65D905FF8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

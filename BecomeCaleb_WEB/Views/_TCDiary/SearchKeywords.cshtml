@@ -1,71 +1,142 @@
 ﻿@model IEnumerable<BecomeCaleb_WEB.Models.CalebTbl._TCDiary>
+@using System.Web;
 
 @{
     ViewData["Title"] = "SearchKeywords";
 }
 
 <h1>SearchKeywords</h1>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div>
+            <include page="~/Views/HomeIndex.cshtml" />
+            <form asp-action="SearchKeywords">
+                Keyword : <input type="text" name="_searchKeyword" value="@Html.Raw(HttpUtility.HtmlDecode(TempData["SearchKeyword"].ToString()))" />
+                <input type="submit" />
+            </form>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ChurchSeq)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Record)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remark)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastUserSeq)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastDateTime)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChurchSeq)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Record)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastUserSeq)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastDateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DiarySeq">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DiarySeq">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DiarySeq">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    </header>
+    <section>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <div class="default_box" style="padding: 2em 2em; margin: 2em 0; font-weight: bold; color: #5B8BD0; background: #FFF; border: solid 3px #5B8BD0; border-radius: 10px;">
+            <h1>Keyword 언급 횟수</h1>
+            <div class="manager_info">
+                <div class="income_chart">
+                    <canvas id="myChart1" aria-label="income_chart" role="img"></canvas>
+                    <script type="text/javascript" charset="utf-8">
+                        const ctx = document.getElementById('myChart1').getContext('2d');
+                        const myChart = new Chart(ctx, {
+                            type: 'bar',
+                        @if (TempData["ChartDatas"] is not null)
+                        {
+                            @Html.Raw(HttpUtility.HtmlDecode(TempData["ChartDatas"].ToString()));
+                        },
+                            options: {
+                            mainAspectRatio: false,
+                            title: {
+                                display: true,
+                                text: '차트 제목',
+                                fontsize: 30,
+                                fontColor: 'white'
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+
+
+                        },
+                            scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '12개월 내 keyword 언급'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '월별 keyword 언급 횟수',
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                                                                        });
+
+
+                    </script>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ChurchSeq)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Record)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Remark)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastUserSeq)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastDateTime)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChurchSeq)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Record)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastUserSeq)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastDateTime)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.DiarySeq">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.DiarySeq">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.DiarySeq">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</body>

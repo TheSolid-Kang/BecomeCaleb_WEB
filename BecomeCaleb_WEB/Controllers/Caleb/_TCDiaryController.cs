@@ -10,6 +10,7 @@ using BecomeCaleb_WEB.Models.CalebTbl;
 using ASPMVC_Practice.Controllers;
 using Engine._02.KMP;
 using System.Text;
+using Engine._01.DBMgr;
 
 namespace BecomeCaleb_WEB.Controllers.Caleb
 {
@@ -31,9 +32,9 @@ public _TCDiaryController(CalebContext context)
         // GET: _TCDiary
         public async Task<IActionResult> Index()
         {
-              return _context._TCDiaries != null ? 
-                          View(await _context._TCDiaries.ToListAsync()) :
-                          Problem("Entity set 'CalebContext._TCDiaries'  is null.");
+            return _context._TCDiaries != null ?
+                        View(await _context._TCDiaries.ToListAsync()) :
+                        Problem("Entity set 'CalebContext._TCDiaries'  is null.");
         }
 
         // GET: _TCDiary/Details/5
@@ -159,14 +160,14 @@ public _TCDiaryController(CalebContext context)
             {
                 _context._TCDiaries.Remove(_TCDiary);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool _TCDiaryExists(int id)
         {
-          return (_context._TCDiaries?.Any(e => e.DiarySeq == id)).GetValueOrDefault();
+            return (_context._TCDiaries?.Any(e => e.DiarySeq == id)).GetValueOrDefault();
         }
         public async Task<IActionResult> SearchKeywords()
         {
@@ -188,20 +189,21 @@ public _TCDiaryController(CalebContext context)
                 return RedirectToAction(nameof(SearchKeywords));//검색어 없이 검색한 경우
 
             var _TCDiaries = await _context._TCDiaries.ToListAsync();
-            /*var searchKeywords = SplitSearchKeywords(_searchKeyword, ",");
+            var searchKeywords = SplitSearchKeywords(_searchKeyword, ",");
             InsertSearchRecord(_searchKeyword);
             string[] arrColors = { "#ff0000", "#ff8c00", "#ffff00", "#008000", "#0000ff", "#4b0082", "#800080" };
 
-            //CreateChartData(_TCDiaries, searchKeywords);
+            CreateChartData(_TCDiaries, searchKeywords);
 
             foreach (var keyword in searchKeywords)
             {
                 int colorIdx = searchKeywords.IndexOf(keyword);
                 var convertedKeyword = GetConvertedText(keyword, arrColors[colorIdx]); //색상 바꾸기
-                _TCDiaries.ForEach(_e => _e.Record.Replace(keyword, convertedKeyword));
+                _TCDiaries.ForEach(_e => _e.Record = _e.Record.Replace(keyword, convertedKeyword));
             }
-*/
 
+            _TCDiaries.RemoveAll(_e => false == _e.Record.Contains("<span"));
+            _TCDiaries = _TCDiaries.OrderByDescending(_e => _e.InDate).ToList();
 
 
 
@@ -233,33 +235,34 @@ public _TCDiaryController(CalebContext context)
         {
             StringBuilder strBuil = new StringBuilder();
             strBuil.Append($"<span style=\"color:{_color}; font-weight:ariel; font-size : large;\">");
-            strBuil.Append(_text);
+            strBuil.Append($"[{_text}]");
             strBuil.Append("</span>");
             return strBuil.ToString();
         }
         private void InsertSearchRecord(string _searchKeyword)
         {
-            /*            using (var dbMgr = new MSSQL_Mgr())
-                        {
-                            string query = $"INSERT INTO _TCSearchRecord(ChurchSeq, SearchKeyword, LastUserSeq, LastDateTime ) VALUES(1,'{_searchKeyword}', 2, GETDATE());";
+            /*
+            using (var dbMgr = new MSSQL_Mgr())
+            {
+                string query = $"INSERT INTO _TCSearchRecord(ChurchSeq, SearchKeyword, LastUserSeq, LastDateTime ) VALUES(1,'{_searchKeyword}', 2, GETDATE());";
 
-                            dbMgr.GetDataSet(MSSQL_Mgr.DB_CONNECTION.CALEB, query);
+                dbMgr.GetDataSet(MSSQL_Mgr.DB_CONNECTION.CALEB, query);
+            }
+
+                        _TCSearchRecord _TCSearchRecord = new _TCSearchRecord();
+                        _TCSearchRecord.ChurchSeq = 1;
+                        _TCSearchRecord.SearchKeyword = _searchKeyword;
+                        _TCSearchRecord.LastUserSeq = 2;
+                        _TCSearchRecord.LastDateTime = DateTime.Now;
+
+                        _context._TCSearchRecords.AddAsync(_TCSearchRecord);
+                        _context.SaveChangesAsync();
+                        using (var _con = new CalebContext())
+                        {
+                            _con._TCSearchRecords.AddAsync(_TCSearchRecord);
+                            _con.SaveChangesAsync();
                         }
             */
-
-
-            _TCSearchRecord _TCSearchRecord = new _TCSearchRecord();
-            _TCSearchRecord.ChurchSeq = 1;
-            _TCSearchRecord.SearchKeyword = _searchKeyword;
-            _TCSearchRecord.LastUserSeq = 2;
-            _TCSearchRecord.LastDateTime = DateTime.Now;
-
-            /*            using (var _con  = new CalebContext())
-                        {
-                            _con._TCSearchRecords.Add(_TCSearchRecord);
-                            _con.SaveChanges();
-                        }*/
-
         }
         private void CreateChartData(List<_TCDiary> _TCDiaries, List<string> _searchKeywords)
         {
@@ -310,13 +313,19 @@ public _TCDiaryController(CalebContext context)
             string labels = "";
             foreach (var charX in setChartX)
             {
-                labels += $"'{charX}', ";
+                labels += $"'{charX}',";
             }
+            labels = labels.Substring(0, labels.LastIndexOf(","));
             return labels;
         }
         private string GetSearchKeywordCount(List<_TCDiary> _TCDiaries, string _labels, string _searchKeyword)
         {
-            var listLabels = _labels.Split(",");
+            var listLabels = new List<string>();
+            if (_labels.Contains(","))
+                listLabels = _labels.Split(",").ToList();
+            else
+                listLabels.Add(_labels);
+
             _KMP kmp = new _KMP();
             Dictionary<string, List<_TCDiary>> _mapTCDiaries = new();
             foreach (var _chartX in listLabels)
@@ -329,7 +338,7 @@ public _TCDiaryController(CalebContext context)
                 string year = e.InDate?.Year.ToString();
                 string month = e.InDate?.Month.ToString();
                 if (month.Length < 2) { month = "0" + month; }
-                string dateYearMonth = $"{year}.{month}";
+                string dateYearMonth = $"'{year}.{month}'";
 
                 _mapTCDiaries[dateYearMonth].Add(e);
             });

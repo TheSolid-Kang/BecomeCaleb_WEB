@@ -59,6 +59,21 @@ namespace BecomeCaleb_WEB.Models.CalebTbl
         /// </summary>
         [Column(TypeName = "datetime")]
         public DateTime? LastDateTime { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string? ToString()
+        {
+            return base.ToString();
+        }
     }
 }
 

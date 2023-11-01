@@ -188,10 +188,12 @@ public _TCDiaryController(CalebContext context)
             if (string.IsNullOrEmpty(_searchKeyword))
                 return RedirectToAction(nameof(SearchKeywords));//검색어 없이 검색한 경우
 
+            string[] arrColors = { "#ff0000", "#ff8c00", "#ffff00", "#008000", "#0000ff", "#4b0082", "#800080" };
             var _TCDiaries = await _context._TCDiaries.ToListAsync();
             var searchKeywords = SplitSearchKeywords(_searchKeyword, ",");
+            searchKeywords.Remove("");
+
             InsertSearchRecord(_searchKeyword);
-            string[] arrColors = { "#ff0000", "#ff8c00", "#ffff00", "#008000", "#0000ff", "#4b0082", "#800080" };
 
             CreateChartData(_TCDiaries, searchKeywords);
 
@@ -199,10 +201,10 @@ public _TCDiaryController(CalebContext context)
             {
                 int colorIdx = searchKeywords.IndexOf(keyword);
                 var convertedKeyword = GetConvertedText(keyword, arrColors[colorIdx]); //색상 바꾸기
-                _TCDiaries.ForEach(_e => _e.Record = _e.Record.Replace(keyword, convertedKeyword));
+                _TCDiaries.ForEach(_e => _e.Record = _e.Record?.Replace(keyword, convertedKeyword));
             }
 
-            _TCDiaries.RemoveAll(_e => false == _e.Record.Contains("<span"));
+            _TCDiaries.RemoveAll(_e => false == _e.Record?.Contains("<span"));
             _TCDiaries = _TCDiaries.OrderByDescending(_e => _e.InDate).ToList();
 
 
@@ -249,19 +251,19 @@ public _TCDiaryController(CalebContext context)
                 dbMgr.GetDataSet(MSSQL_Mgr.DB_CONNECTION.CALEB, query);
             }
 
-                        _TCSearchRecord _TCSearchRecord = new _TCSearchRecord();
-                        _TCSearchRecord.ChurchSeq = 1;
-                        _TCSearchRecord.SearchKeyword = _searchKeyword;
-                        _TCSearchRecord.LastUserSeq = 2;
-                        _TCSearchRecord.LastDateTime = DateTime.Now;
+            _TCSearchRecord _TCSearchRecord = new _TCSearchRecord();
+            _TCSearchRecord.ChurchSeq = 1;
+            _TCSearchRecord.SearchKeyword = _searchKeyword;
+            _TCSearchRecord.LastUserSeq = 2;
+            _TCSearchRecord.LastDateTime = DateTime.Now;
 
-                        _context._TCSearchRecords.AddAsync(_TCSearchRecord);
-                        _context.SaveChangesAsync();
-                        using (var _con = new CalebContext())
-                        {
-                            _con._TCSearchRecords.AddAsync(_TCSearchRecord);
-                            _con.SaveChangesAsync();
-                        }
+            //_context._TCSearchRecords.AddAsync(_TCSearchRecord);
+            //_context.SaveChangesAsync();
+            using (var _con = new CalebContext())
+            {
+                _con._TCSearchRecords.Add(_TCSearchRecord);
+                _con.SaveChanges();
+            }
             */
         }
         private void CreateChartData(List<_TCDiary> _TCDiaries, List<string> _searchKeywords)

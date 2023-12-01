@@ -243,13 +243,14 @@ public _TCDiaryController(CalebContext context)
         }
         private void InsertSearchRecord(string _searchKeyword)
         {
-            /*
+
             using (var dbMgr = new MSSQL_Mgr())
             {
                 string query = $"INSERT INTO _TCSearchRecord(ChurchSeq, SearchKeyword, LastUserSeq, LastDateTime ) VALUES(1,'{_searchKeyword}', 2, GETDATE());";
 
-                dbMgr.GetDataSet(MSSQL_Mgr.DB_CONNECTION.CALEB, query);
+                dbMgr.GetDataSet(DbMgr.DB_CONNECTION.CALEB, query);
             }
+            /*
 
             _TCSearchRecord _TCSearchRecord = new _TCSearchRecord();
             _TCSearchRecord.ChurchSeq = 1;

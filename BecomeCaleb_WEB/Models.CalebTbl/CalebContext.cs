@@ -1,10 +1,4 @@
-﻿
-using BecomeCaleb_WEB.Models.CalebTbl.Configurations;
-using BecomeCaleb_WEB.Models.CalebTbl;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 namespace BecomeCaleb_WEB.Models.CalebTbl
 {
     public partial class CalebContext : DbContext
@@ -41,8 +35,8 @@ namespace BecomeCaleb_WEB.Models.CalebTbl
             modelBuilder.ApplyConfiguration(new Configurations._TCUserConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations._TCFinancialLedgerConfiguration());
 
-        OnModelCreatingGeneratedProcedures(modelBuilder);
-        OnModelCreatingGeneratedFunctions(modelBuilder);
+            OnModelCreatingGeneratedProcedures(modelBuilder);
+            OnModelCreatingGeneratedFunctions(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

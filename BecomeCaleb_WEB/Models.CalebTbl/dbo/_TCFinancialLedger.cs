@@ -25,6 +25,7 @@ namespace BecomeCaleb_WEB.Models.CalebTbl
         /// <summary>
         /// 가계부 내부코드
         /// </summary>
+        [Key]
         public int FinancialSeq { get; set; }
 
         /// <summary>

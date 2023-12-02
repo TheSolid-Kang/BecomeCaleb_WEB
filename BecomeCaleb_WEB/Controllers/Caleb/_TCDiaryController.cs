@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BecomeCaleb_WEB.Models.CalebTbl;
 using BecomeCaleb_WEB.Models.CalebTbl;
 using ASPMVC_Practice.Controllers;
 using Engine._02.KMP;

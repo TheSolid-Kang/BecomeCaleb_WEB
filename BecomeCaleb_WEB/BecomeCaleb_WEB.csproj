@@ -7,13 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Diary\**" />
+    <Content Remove="Views\Diary\**" />
+    <EmbeddedResource Remove="Views\Diary\**" />
+    <None Remove="Views\Diary\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="efpt.config.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migration\" />
     <Folder Include="Models\CalebTbl\" />
-    <Folder Include="Views\Diary\" />
   </ItemGroup>
 
   <ItemGroup>

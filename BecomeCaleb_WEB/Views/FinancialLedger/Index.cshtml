@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BecomeCaleb_WEB.Models.CalebTbl._TCFinancialLedger>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ChurchSeq)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.History)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryMaj)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryMir)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastUserSeq)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastDateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChurchSeq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.History)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryMaj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryMir)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUserSeq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDateTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FinancialSeq">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FinancialSeq">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FinancialSeq">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

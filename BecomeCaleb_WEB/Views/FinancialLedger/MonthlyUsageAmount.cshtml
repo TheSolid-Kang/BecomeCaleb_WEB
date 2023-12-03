@@ -15,16 +15,17 @@
     <header>
         <div>
             <include page="~/Views/HomeIndex.cshtml" />
-            <form asp-action="SearchKeywords">
-                <label><input type="checkbox" name="Category" value="1">헌금</label>
-                <label><input type="checkbox" name="Category" value="2">전도비</label>
-                <label><input type="checkbox" name="Category" value="3">교제비</label>
-                <label><input type="checkbox" name="Category" value="4">적금</label>
-                <label><input type="checkbox" name="Category" value="5">생활비</label>
-                <label><input type="checkbox" name="Category" value="6">비상금</label>
-                <label><input type="checkbox" name="Category" value="">식비</label>
-                <p><input type="submit" value="Submit"> <input type="reset" value="Reset"></p>
-
+            <form asp-action="MonthlyUsageAmount" method="post">
+                <label><input type="checkbox" name="CategoryMirs" value="1">헌금</label>
+                <label><input type="checkbox" name="CategoryMirs" value="2">전도비</label>
+                <label><input type="checkbox" name="CategoryMirs" value="3">교제비</label>
+                <label><input type="checkbox" name="CategoryMirs" value="4">적금</label>
+                <label><input type="checkbox" name="CategoryMirs" value="5">생활비</label>
+                <label><input type="checkbox" name="CategoryMirs" value="6">비상금</label>
+                <label><input type="checkbox" name="CategoryMirs" value="7">식비</label>
+                <p>
+                  <input type="submit" value="Submit"> 
+                  <input type="reset" value="Reset"></p>
             </form>
         </div>
 
@@ -101,9 +102,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.TotPrice)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CategoryMir)
-                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -125,9 +123,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.TotPrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CategoryMir)
                         </td>
                     </tr>
                 }

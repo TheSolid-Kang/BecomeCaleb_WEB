@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<BecomeCaleb_WEB.Models.CalebTbl._VCategoryUsePrice>
 @using System.Web;
+@using BecomeCaleb_WEB.Models.CalebTbl;
 
 @{
     ViewData["Title"] = "MonthlyUsageAmount";
@@ -16,16 +17,18 @@
         <div>
             <include page="~/Views/HomeIndex.cshtml" />
             <form asp-action="MonthlyUsageAmount" method="post">
-                <label><input type="checkbox" name="CategoryMirs" value="1">헌금</label>
-                <label><input type="checkbox" name="CategoryMirs" value="2">전도비</label>
-                <label><input type="checkbox" name="CategoryMirs" value="3">교제비</label>
-                <label><input type="checkbox" name="CategoryMirs" value="4">적금</label>
-                <label><input type="checkbox" name="CategoryMirs" value="5">생활비</label>
-                <label><input type="checkbox" name="CategoryMirs" value="6">비상금</label>
-                <label><input type="checkbox" name="CategoryMirs" value="7">식비</label>
+                @if (TempData["_TCMinors"] is not null)
+                {
+                    var _TCMinors = TempData["_TCMinors"] as List<_TCMinor>;
+                    for (int i = 0; i < _TCMinors.Count; ++i)
+                    {
+                        <label><input type="checkbox" name="CategoryMirs" value="@(i+1)" checked>@_TCMinors[i].MinorName</label>
+                    }
+                }
                 <p>
-                  <input type="submit" value="Submit"> 
-                  <input type="reset" value="Reset"></p>
+                    <input type="submit" value="Submit">
+                    <input type="reset" value="Reset">
+                </p>
             </form>
         </div>
 
@@ -46,7 +49,8 @@
                             type: 'bar',
                         @if (TempData["ChartDatas"] is not null)
                         {
-                            @Html.Raw(HttpUtility.HtmlDecode(TempData["ChartDatas"].ToString()));
+                            @Html.Raw(HttpUtility.HtmlDecode(TempData["ChartDatas"].ToString()))
+                            ;
                         },
                             options: {
                             mainAspectRatio: false,
@@ -76,7 +80,7 @@
                                 }
                             }
                         }
-                                                                                                                    });
+                                                                                                                                            });
 
 
                     </script>

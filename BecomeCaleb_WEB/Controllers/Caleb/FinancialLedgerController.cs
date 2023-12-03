@@ -51,6 +51,7 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
         }
         public async Task<IActionResult> MonthlyUsageAmount(List<string>? CategoryMirs)
         {
+            TempData["_TCMinors"] = _TCMinors;
             TempData["ChartDatas"] = "";
             using (var dbMgr = new MSSQL_Mgr())
             {

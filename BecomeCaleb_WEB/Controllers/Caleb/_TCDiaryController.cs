@@ -261,12 +261,12 @@ public _TCDiaryController(CalebContext context)
             }
             */
         }
-        private void CreateChartData(List<_TCDiary> _TCDiaries, List<string> _searchKeywords)
+        private void CreateChartData(List<_TCDiary> _list, List<string> _searchKeywords)
         {
             string[] arrRainbowColors = { "#ff0000", "#ff8c00", "#ffff00", "#008000", "#0000ff", "#4b0082", "#800080" };
             var iter = arrRainbowColors.GetEnumerator();
 
-            var labels = GetChartLabels(_TCDiaries);
+            var labels = GetChartLabels(_list);
             StringBuilder strBuil = new StringBuilder(2048);
             strBuil.AppendLine($"data: {{");
             strBuil.AppendLine($"   labels: [{labels}],");
@@ -278,7 +278,7 @@ public _TCDiaryController(CalebContext context)
                 if (false == iter.MoveNext())
                     break;
 
-                string data = GetSearchKeywordCount(_TCDiaries, labels, _keyword);
+                string data = GetSearchKeywordCount(_list, labels, _keyword);
                 strBuil.AppendLine($"{{");
 
                 strBuil.AppendLine($"   label: '{_keyword}',");
@@ -293,10 +293,10 @@ public _TCDiaryController(CalebContext context)
             chartDatas += "]}";
             TempData["ChartDatas"] = chartDatas;
         }
-        private string GetChartLabels(List<_TCDiary> _TCDiaries)
+        private string GetChartLabels(List<_TCDiary> _list)
         {
             SortedSet<string> setChartX = new SortedSet<string>();
-            foreach (var _diary in _TCDiaries)
+            foreach (var _diary in _list)
             {
                 string year = _diary.InDate?.Year.ToString();
                 string month = _diary.InDate?.Month.ToString();
@@ -315,7 +315,7 @@ public _TCDiaryController(CalebContext context)
             labels = labels.Substring(0, labels.LastIndexOf(","));
             return labels;
         }
-        private string GetSearchKeywordCount(List<_TCDiary> _TCDiaries, string _labels, string _searchKeyword)
+        private string GetSearchKeywordCount(List<_TCDiary> _list, string _labels, string _searchKeyword)
         {
             var listLabels = new List<string>();
             if (_labels.Contains(","))
@@ -330,7 +330,7 @@ public _TCDiaryController(CalebContext context)
                 _mapTCDiaries.Add(_chartX, new List<_TCDiary>());
             }
 
-            _TCDiaries.ForEach(e =>
+            _list.ForEach(e =>
             {
                 string year = e.InDate?.Year.ToString();
                 string month = e.InDate?.Month.ToString();

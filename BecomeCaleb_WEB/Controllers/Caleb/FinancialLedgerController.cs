@@ -13,7 +13,7 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
         {
             _context = new CalebContext();
             _TCMinors = _context._TCMinors.ToList();
-            _TCMinors = _TCMinors.FindAll(_e => _e.MajorSeq == 4);
+            _TCMinors = _TCMinors.FindAll(_e => _e.MajorSeq == 4);// 4 == 가계부유형
         }
 
         private readonly CalebContext _context;
@@ -72,12 +72,12 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
                 return View(list);
             }
         }
-        private void CreateChartData(List<_VCategoryUsePrice> _TCDiaries, List<string> _searchKeywords)
+        private void CreateChartData(List<_VCategoryUsePrice> _list, List<string> _searchKeywords)
         {
             string[] arrRainbowColors = { "#ff0000", "#ff8c00", "#ffff00", "#008000", "#0000ff", "#4b0082", "#800080" };
             var iter = arrRainbowColors.GetEnumerator();
 
-            var labels = GetChartLabels(_TCDiaries);
+            var labels = GetChartLabels(_list);
             StringBuilder strBuil = new StringBuilder(2048);
             strBuil.AppendLine($"data: {{");
             strBuil.AppendLine($"   labels: [{labels}],");
@@ -89,7 +89,7 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
                 if (false == iter.MoveNext())
                     break;
 
-                var iterable = from _item in _TCDiaries where _item.CategoryMir.ToString().Equals(_keyword) select _item.TotPrice.ToString() ;
+                var iterable = from _item in _list where _item.CategoryMir.ToString().Equals(_keyword) select _item.TotPrice.ToString() ;
                 string data = iterable.Aggregate((item1, item2) => item1 += $", {item2}");
                 //string data = GetSearchKeywordCount(_TCDiaries, labels, _keyword);
                 strBuil.AppendLine($"{{");
@@ -106,10 +106,10 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
             chartDatas += "]}";
             TempData["ChartDatas"] = chartDatas;
         }
-        private string GetChartLabels(List<_VCategoryUsePrice> _TCDiaries)
+        private string GetChartLabels(List<_VCategoryUsePrice> _list)
         {
             SortedSet<string> setChartX = new SortedSet<string>();
-            foreach (var _diary in _TCDiaries)
+            foreach (var _diary in _list)
             {
                 string year = _diary.YYYY.ToString();
                 string month = _diary.MM.ToString();

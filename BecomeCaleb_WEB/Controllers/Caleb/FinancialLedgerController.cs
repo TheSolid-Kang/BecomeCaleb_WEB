@@ -1,6 +1,7 @@
 ﻿using ASPMVC_Practice.Controllers;
 using BecomeCaleb_WEB.Models.CalebTbl;
 using Engine._01.DBMgr;
+using Engine._02.KMP;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
@@ -51,26 +52,60 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
         public async Task<IActionResult> MonthlyUsageAmount(List<string>? CategoryMirs)
         {
             TempData["ChartDatas"] = "";
-            string[] arrColors = { "#ff0000", "#ff8c00", "#ffff00", "#008000", "#0000ff", "#4b0082", "#800080" };
-
-
             using (var dbMgr = new MSSQL_Mgr())
             {
                 var list = dbMgr.SelectList<_VCategoryUsePrice>(DbMgr.DB_CONNECTION.CALEB, "EXEC SP_GetMonthlyUsageAmount");
+                list = GetMonthlyUsage(list);
                 //list.ForEach(e => Console.WriteLine(e.YYYY));
                 if (0 != CategoryMirs.Count)
                 {
                     var iterable = from _item in CategoryMirs select _item;
                     string data = iterable.Aggregate((item1, item2) => item1 += $", {item2}");
-
-                    //list = list.FindAll(x => true == CategoryMirs.Find(x.CategoryMir.ToString()).Equals(""));
-
                     var searchKeywords = SplitSearchKeywords(data, ",");
                     CreateChartData(list, searchKeywords);
                 }
 
                 return View(list);
             }
+        }
+        private List<_VCategoryUsePrice> GetMonthlyUsage(List<_VCategoryUsePrice> _list)
+        {
+            Dictionary<int, HashSet<int>> map = new Dictionary<int, HashSet<int>>();
+            foreach (_VCategoryUsePrice _item in _list)
+            {
+                if (false == map.ContainsKey((int)_item.YYYY))
+                    map.Add((int)_item.YYYY, new HashSet<int>());
+
+                map[(int)_item.YYYY].Add((int)_item.MM);
+            }
+
+            List<_VCategoryUsePrice> list = new List<_VCategoryUsePrice>();
+            foreach(var _pair in map)
+            {
+                int yyyy = _pair.Key;
+                HashSet<int> set = _pair.Value;
+                foreach(int _mm in set)
+                {
+                    foreach(var _mir in _TCMinors)
+                    {
+                        list.Add(new _VCategoryUsePrice() { YYYY = yyyy, MM = _mm, CategoryMir = _mir.MinorSeq, Category = _mir.MinorName, TotPrice = 0});
+                    }
+                }
+            }
+            
+            foreach(var _item in list)
+            {
+                var item = _list.Find(_e => _e.YYYY == _item.YYYY 
+                && _e.MM == _item.MM 
+                && _e.CategoryMir == _item.CategoryMir);
+                if(null != item)
+                {
+                    _item.TotPrice = item.TotPrice;
+                }
+            }
+
+            return list;
+
         }
         private void CreateChartData(List<_VCategoryUsePrice> _list, List<string> _searchKeywords)
         {
@@ -128,7 +163,6 @@ namespace BecomeCaleb_WEB.Controllers.Caleb
             labels = labels.Substring(0, labels.LastIndexOf(","));
             return labels;
         }
-
         // GET: FinancialLedgerController/Details/5
         public async Task<IActionResult> Details(int? id)
         {

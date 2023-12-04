@@ -244,22 +244,6 @@ public _TCDiaryController(CalebContext context)
 
                 dbMgr.GetDataSet(DbMgr.DB_CONNECTION.CALEB, query);
             }
-            /*
-
-            _TCSearchRecord _TCSearchRecord = new _TCSearchRecord();
-            _TCSearchRecord.ChurchSeq = 1;
-            _TCSearchRecord.SearchKeyword = _searchKeyword;
-            _TCSearchRecord.LastUserSeq = 2;
-            _TCSearchRecord.LastDateTime = DateTime.Now;
-
-            //_context._TCSearchRecords.AddAsync(_TCSearchRecord);
-            //_context.SaveChangesAsync();
-            using (var _con = new CalebContext())
-            {
-                _con._TCSearchRecords.Add(_TCSearchRecord);
-                _con.SaveChanges();
-            }
-            */
         }
         private void CreateChartData(List<_TCDiary> _list, List<string> _searchKeywords)
         {

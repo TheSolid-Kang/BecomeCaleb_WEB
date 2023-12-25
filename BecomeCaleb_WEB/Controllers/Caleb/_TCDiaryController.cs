@@ -168,6 +168,7 @@ public _TCDiaryController(CalebContext context)
             TempData["SearchKeyword"] = "";
             TempData["ChartDatas"] = "";
             var _TCDiaries = await _context._TCDiaries.ToListAsync();
+            _TCDiaries = _TCDiaries?.OrderBy(_e => _e.InDate).ToList();
             return _context._TCDiaries != null ?
             View(_TCDiaries) :
             Problem("Entity set 'CalebContext._TCDiaries'  is null.");
@@ -199,7 +200,11 @@ public _TCDiaryController(CalebContext context)
             }
 
             _TCDiaries.RemoveAll(_e => false == _e.Record?.Contains("<span"));
-            _TCDiaries = _TCDiaries.OrderByDescending(_e => _e.InDate).ToList();
+            //_TCDiaries = _TCDiaries.OrderByDescending(_e => _e.InDate).ToList();
+            //_TCDiaries = _TCDiaries.OrderBy(_e => _e.InDate).ToList();
+            _TCDiaries = (from _e in _TCDiaries
+                         orderby _e.InDate ascending
+                         select _e).ToList();
 
 
 

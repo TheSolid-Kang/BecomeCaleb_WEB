@@ -81,22 +81,13 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.ChurchSeq)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.InDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Record)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Remark)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LastUserSeq)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.LastDateTime)
@@ -109,22 +100,13 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ChurchSeq)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.InDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
                             @Html.Raw(item.Record?.Replace("\n", "<br/>"))
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Remark)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastUserSeq)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.LastDateTime)

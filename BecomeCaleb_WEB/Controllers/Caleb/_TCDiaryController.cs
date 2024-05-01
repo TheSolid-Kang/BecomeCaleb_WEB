@@ -173,7 +173,7 @@ public _TCDiaryController(CalebContext context)
             View(_TCDiaries) :
             Problem("Entity set 'CalebContext._TCDiaries'  is null.");
         }
-
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SearchKeywords(string _searchKeyword)

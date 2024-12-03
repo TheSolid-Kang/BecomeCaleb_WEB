@@ -1,0 +1,82 @@
+﻿/* 대시보드 카드 스타일링 */
+.dashboard-card {
+    transition: transform 0.2s;
+    min-height: 160px;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+
+/* 진행바 스타일링 */
+.progress-custom {
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar-custom {
+    background-color: white;
+}
+
+/* AG Grid 커스텀 스타일 */
+.ag-theme-alpine {
+    --ag-header-height: 40px;
+    --ag-header-foreground-color: #374151;
+    --ag-header-background-color: #f3f4f6;
+    --ag-row-hover-color: #f9fafb;
+}
+
+/* 폼 섹션 스타일링 */
+.form-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 입력 필드 그룹 스타일링 */
+.input-group-custom {
+    margin-bottom: 1rem;
+}
+
+    .input-group-custom label {
+        font-weight: 600;
+        color: #374151;
+    }
+
+/* habit.css에 추가 */
+.habit-container {
+    display: flex;
+    min-height: calc(100vh - 60px); /* 헤더 높이만큼 뺌 */
+}
+
+.habit-sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-right: 1px solid #dee2e6;
+}
+
+.habit-content {
+    flex: 1;
+    padding: 1rem;
+}
+
+.habit-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+    .habit-item:hover {
+        background-color: #e9ecef;
+        text-decoration: none;
+    }
+
+    .habit-item.active {
+        background-color: #0d6efd;
+        color: white;
+    }

@@ -1,0 +1,246 @@
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+
+@model IEnumerable<BecomeCaleb_WEB.Models.CalebHabitTbl._TCHOccurrenceRecord>
+@{
+   ViewData["Title"] = "습관 관리";
+   var maxCleanPeriod = ViewBag.MaxCleanPeriod ?? 0;
+   var currentCleanPeriod = ViewBag.CurrentCleanPeriod ?? 0;
+   var successRate = ViewBag.SuccessRate ?? 0;
+}
+
+
+
+<div class="habit-container">
+<!-- 사이드바 -->
+<div class="habit-sidebar">
+    @foreach (var habit in ViewBag.HabitList)
+    {
+        <a href="?habitSeq=@habit.Value"
+           class="habit-item @(ViewBag.SelectedHabitSeq == habit.Value ? "active" : "")">
+            @habit.Text
+        </a>
+    }
+</div>
+<div class="habit-content">
+
+<div class="container-fluid">
+<div class="mb-3">
+    <select asp-items="@ViewBag.HabitList" 
+            class="form-select" 
+            onchange="location.href='?habitSeq=' + this.value">
+    </select>
+</div>
+   <!-- 동기부여 대시보드 -->
+   <div class="row mb-4">
+       <!-- 현재 청정 기간 -->
+       <div class="col-md-3">
+           <div class="card bg-primary text-white">
+               <div class="card-body">
+                   <h5 class="card-title">현재 청정 기간</h5>
+                   <div class="display-4">@currentCleanPeriod 일</div>
+                   <div class="progress mt-2" style="height: 10px;">
+                       <div class="progress-bar bg-white" style="width: @(currentCleanPeriod * 100 / 30)%"></div>
+                   </div>
+                   <small>목표: 30일</small>
+               </div>
+           </div>
+       </div>
+
+       <!-- 최장 청정 기간 -->
+       <div class="col-md-3">
+           <div class="card bg-success text-white">
+               <div class="card-body">
+                   <h5 class="card-title">최장 청정 기록</h5>
+                   <div class="display-4">@maxCleanPeriod 일</div>
+                   @if (currentCleanPeriod > maxCleanPeriod * 0.8)
+                   {
+                       <div class="mt-2 alert alert-warning">
+                           최고 기록 달성이 얼마 남지 않았습니다!
+                       </div>
+                   }
+               </div>
+           </div>
+       </div>
+
+       <!-- 성공률 -->
+       <div class="col-md-3">
+           <div class="card @(successRate > 70 ? "bg-success" : "bg-warning") text-white">
+               <div class="card-body">
+                   <h5 class="card-title">대처 성공률</h5>
+                   <div class="display-4">@successRate%</div>
+                   <div class="progress mt-2" style="height: 10px;">
+                       <div class="progress-bar bg-white" style="width: @successRate%"></div>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+       <!-- 격려 메시지 -->
+       <div class="col-md-3">
+           <div class="card bg-info text-white">
+               <div class="card-body">
+                   <h5 class="card-title">오늘의 말씀</h5>
+                   <p class="lead" id="encouragementMessage">
+                       "이기는 자는 이것들을 상속으로 받으리라"
+                       <br/>
+                       <small>- 요한계시록 21:7</small>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <!-- 통계 차트 -->
+   <div class="row mb-4">
+       <div class="col-md-6">
+           <div class="card">
+               <div class="card-body">
+                   <h5 class="card-title">월별 개선 추이</h5>
+                   <canvas id="monthlyChart"></canvas>
+               </div>
+           </div>
+       </div>
+       <div class="col-md-6">
+           <div class="card">
+               <div class="card-body">
+                   <h5 class="card-title">가장 효과적인 대처방법</h5>
+                   <canvas id="countermeasureChart"></canvas>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <!-- AG Grid 테이블 -->
+   <div class="card">
+       <div class="card-body">
+           <div class="d-flex justify-content-between align-items-center mb-3">
+               <h3>상세 기록</h3>
+               <a asp-action="Create" class="btn btn-primary">
+                   <i class="fas fa-plus"></i> 새 기록
+               </a>
+           </div>
+           <div id="myGrid" class="ag-theme-alpine" style="height: 500px;"></div>
+       </div>
+   </div>
+</div>
+</div>
+</div>
+@section Scripts {
+    <link rel="stylesheet" href="~/css/habit/index.css" />
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- AG Grid 라이브러리 추가 -->
+   <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css">
+   
+
+    <!-- AG Grid 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css">
+    
+    <!-- AG Grid 초기화 -->
+    <script>
+        const gridOptions = {
+            columnDefs: [
+                { field: 'occurrenceDateTime', headerName: '발생일시', sortable: true },
+                { field: 'habitSeqNavigation.habitName', headerName: '습관', sortable: true },
+                { field: 'locationSeqNavigation.locationName', headerName: '장소', sortable: true },
+                { field: 'cleanPeriodDays', headerName: '청정기간', sortable: true },
+    {
+        headerName: '당시 상태',
+        valueGetter: function(params) {
+            if (!params.data._TCHOccurrenceStates) return '';
+            return params.data._TCHOccurrenceStates
+                .filter(s => s && s.stateSeqNavigation)
+                .map(s => `${s.stateSeqNavigation.stateName}(${s.intensity})`)
+                .join(', ');
+        }
+    },
+                { field: 'remark', headerName: '비고' }
+            ],
+            defaultColDef: {
+                flex: 1,
+                minWidth: 100,
+                resizable: true
+            },
+            rowData: @Html.Raw(JsonSerializer.Serialize(Model, new JsonSerializerOptions 
+            { 
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            }))
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const gridDiv = document.querySelector('#myGrid');
+            new agGrid.Grid(gridDiv, gridOptions);
+        });
+    </script>
+   <script>
+       // 월별 차트
+       const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+       new Chart(monthlyCtx, {
+           type: 'line',
+           data: {
+               labels: @Json.Serialize(ViewBag.MonthLabels),
+               datasets: [{
+                   label: '평균 청정 기간',
+                   data: @Json.Serialize(ViewBag.MonthlyData),
+                   borderColor: 'rgb(75, 192, 192)',
+                   tension: 0.1
+               }]
+           },
+           options: {
+               responsive: true,
+               scales: {
+                   y: {
+                       beginAtZero: true
+                   }
+               }
+           }
+       });
+
+       // 대처방법 효과성 차트
+       const countermeasureCtx = document.getElementById('countermeasureChart').getContext('2d');
+       new Chart(countermeasureCtx, {
+           type: 'bar',
+           data: {
+               labels: @Json.Serialize(ViewBag.CountermeasureLabels),
+               datasets: [{
+                   label: '성공률 (%)',
+                   data: @Json.Serialize(ViewBag.CountermeasureData),
+                   backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                   borderColor: 'rgb(54, 162, 235)',
+                   borderWidth: 1
+               }]
+           },
+           options: {
+               responsive: true,
+               scales: {
+                   y: {
+                       beginAtZero: true,
+                       max: 100
+                   }
+               }
+           }
+       });
+
+       // 격려 메시지 랜덤 표시
+       const messages = [
+           { text: "네가 먹든지 마시든지 무엇을 하든지 다 하나님의 영광을 위하여 하라", reference: "고린도전서 10:31" },
+           { text: "이기는 자는 이것들을 상속으로 받으리라", reference: "요한계시록 21:7" },
+           { text: "이는 내가 너와 함께 있을 것임이라", reference: "야고보서 4:10" },
+       ];
+
+       function updateEncouragementMessage() {
+           const message = messages[Math.floor(Math.random() * messages.length)];
+           const element = document.getElementById('encouragementMessage');
+           element.innerHTML = `"${message.text}"<br><small>- ${message.reference}</small>`;
+       }
+
+       // 12시간마다 메시지 갱신
+       setInterval(updateEncouragementMessage, 12 * 60 * 60 * 1000);
+       updateEncouragementMessage();
+   </script>
+}

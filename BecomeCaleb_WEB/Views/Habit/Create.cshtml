@@ -1,0 +1,329 @@
+﻿@model BecomeCaleb_WEB.Models.ViewModel.Caleb.Habit.HabitOccurrenceViewModel
+@{
+    ViewData["Title"] = "청정 기록 작성";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Habit/create.css" />
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="text-center mb-4">
+                <h1 class="display-4">새로운 도전의 기록</h1>
+                <p class="lead text-muted">한 번의 승리가 다음 승리의 발판이 됩니다.</p>
+            </div>
+
+            <form asp-action="Create" id="habitForm" class="bg-white shadow-sm rounded p-4">
+                <div class="row">
+                    <!-- 기본 정보 섹션 -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">📝 기본 정보</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label asp-for="OccurrenceRecord.HabitSeq" class="form-label fw-bold">극복하고자 하는 습관</label>
+                                    <select asp-for="OccurrenceRecord.HabitSeq" class="form-select" asp-items="ViewBag._TCHHabits">
+                                        <option value="">-- 선택해주세요 --</option>
+                                    </select>
+                                    <span asp-validation-for="OccurrenceRecord.HabitSeq" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="OccurrenceRecord.OccurrenceDateTime" class="form-label fw-bold">발생 일시</label>
+                                    <input asp-for="OccurrenceRecord.OccurrenceDateTime" class="form-control" id="CurDateTime" type="datetime-local" />
+                                    <span asp-validation-for="OccurrenceRecord.OccurrenceDateTime" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="OccurrenceRecord.LocationSeq" class="form-label fw-bold">장소</label>
+                                    <select asp-for="OccurrenceRecord.LocationSeq" class="form-select" asp-items="ViewBag._TCHLocations">
+                                        <option value="">-- 선택해주세요 --</option>
+                                    </select>
+                                    <span asp-validation-for="OccurrenceRecord.LocationSeq" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="OccurrenceRecord.CleanPeriodDays" class="form-label fw-bold">청정 기간 <small class="text-muted">(일)</small></label>
+                                    <div class="input-group">
+                                        <input asp-for="OccurrenceRecord.CleanPeriodDays" class="form-control" type="number" min="0" />
+                                        <span class="input-group-text">일</span>
+                                    </div>
+                                    <div class="form-text">이전까지 달성한 청정 기간을 기록해주세요.</div>
+                                    <span asp-validation-for="OccurrenceRecord.CleanPeriodDays" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 상태 및 감정 섹션 -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="card-title mb-0">😔 당시의 감정과 상태</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="statesContainer">
+                                    <!-- 동적으로 추가될 상태 입력 필드들 -->
+                                </div>
+                                <button type="button" class="btn btn-outline-info w-100" onclick="addState()">
+                                    <i class="fas fa-plus"></i> 감정/상태 추가하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 트리거 행동 섹션 -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="card-title mb-0">⚠️ 유발 행동</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="actionsContainer">
+                                    <!-- 동적으로 추가될 행동 입력 필드들 -->
+                                </div>
+                                <button type="button" class="btn btn-outline-warning w-100" onclick="addAction()">
+                                    <i class="fas fa-plus"></i> 유발 행동 추가하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 대처방법 섹션 -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="card-title mb-0">💪 극복 방법</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="countermeasuresContainer">
+                                    <!-- 동적으로 추가될 대처방법 입력 필드들 -->
+                                </div>
+                                <button type="button" class="btn btn-outline-success w-100" onclick="addCountermeasure()">
+                                    <i class="fas fa-plus"></i> 극복 방법 추가하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 상황 요인 분석 -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-secondary text-white">
+                                <h5 class="card-title mb-0">🔍 상황 분석</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label fw-bold">수면 시간</label>
+                                            <div class="input-group">
+                                                <input asp-for="CorrelationFactor.SleepHours" class="form-control" type="number" step="0.1" min="0" max="24" />
+                                                <span class="input-group-text">시간</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label fw-bold">스트레스 수준</label>
+                                            <select asp-for="CorrelationFactor.StressLevel" class="form-select">
+                                                <option value="">선택하세요</option>
+                                                <option value="1">매우 낮음</option>
+                                                <option value="2">낮음</option>
+                                                <option value="3">보통</option>
+                                                <option value="4">높음</option>
+                                                <option value="5">매우 높음</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label fw-bold">고립 시간</label>
+                                            <div class="input-group">
+                                                <input asp-for="CorrelationFactor.AloneHours" class="form-control" type="number" step="0.1" min="0" max="24" />
+                                                <span class="input-group-text">시간</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label fw-bold">날씨</label>
+                                            <select asp-for="CorrelationFactor.WeatherCondition" class="form-select">
+                                                <option value="">선택하세요</option>
+                                                <option value="맑음">맑음</option>
+                                                <option value="흐림">흐림</option>
+                                                <option value="비">비</option>
+                                                <option value="눈">눈</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 비고 섹션 -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="card-title mb-0">📝 추가 메모</h5>
+                            </div>
+                            <div class="card-body">
+                                <textarea asp-for="OccurrenceRecord.Remark" class="form-control" rows="3"
+                                          placeholder="이번 경험을 통해 배운 점이나 다음에 주의할 점을 기록해보세요."></textarea>
+                                <span asp-validation-for="OccurrenceRecord.Remark" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">기록 저장하기</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 ms-2">목록으로</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+            // FontAwesome CDN
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+    <script>
+        // 페이지 로드 시 현재 시간 설정
+        document.addEventListener('DOMContentLoaded', function () {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('CurDateTime').value = now.toISOString().slice(0, 16);
+        });
+
+        // 상태 추가
+        function addState() {
+            const container = document.getElementById('statesContainer');
+            const index = container.children.length;
+
+            const div = document.createElement('div');
+            div.className = 'state-group bg-light rounded p-3 mb-2';
+            div.innerHTML = `
+                <div class="row g-2">
+                    <div class="col-8">
+                        <select name="OccurrenceStates[${index}].StateSeq" class="form-select" required>
+                            <option value="">-- 감정/상태 선택 --</option>
+        @foreach (var item in ViewBag._TCHStates)
+        {
+                                        <option value="@item.Value">@item.Text</option>
+        }
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <select name="OccurrenceStates[${index}].Intensity" class="form-select" required>
+                            <option value="">강도</option>
+                            <option value="1">매우 약함</option>
+                            <option value="2">약함</option>
+                            <option value="3">보통</option>
+                            <option value="4">강함</option>
+                            <option value="5">매우 강함</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                onclick="removeItem(this, 'state-group')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        // 행동 추가
+        function addAction() {
+            const container = document.getElementById('actionsContainer');
+            const index = container.children.length;
+
+            const div = document.createElement('div');
+            div.className = 'action-group bg-light rounded p-3 mb-2';
+            div.innerHTML = `
+                <div class="row g-2">
+                    <div class="col-11">
+                        <select name="OccurrenceActions[${index}].ActionSeq" class="form-select" required>
+                            <option value="">-- 유발 행동 선택 --</option>
+        @foreach (var item in ViewBag._TCHActions)
+        {
+                                        <option value="@item.Value">@item.Text</option>
+        }
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                onclick="removeItem(this, 'action-group')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        // 대처방법 추가
+        function addCountermeasure() {
+            const container = document.getElementById('countermeasuresContainer');
+            const index = container.children.length;
+
+            const div = document.createElement('div');
+            div.className = 'countermeasure-group bg-light rounded p-3 mb-2';
+            div.innerHTML = `
+                <div class="row g-2">
+                    <div class="col-4">
+                        <select name="OccurrenceCountermeasures[${index}].CountermeasureSeq" class="form-select" required>
+                            <option value="">-- 극복 방법 선택 --</option>
+        @foreach (var item in ViewBag._TCHCountermeasures)
+        {
+                                        <option value="@item.Value">@item.Text</option>
+        }
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <select name="OccurrenceCountermeasures[${index}].IsSuccessful" class="form-select" required>
+                            <option value="true">성공</option>
+                            <option value="false">실패</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <select name="OccurrenceCountermeasures[${index}].EffectivenessRating" class="form-select" required>
+                            <option value="">효과</option>
+                            <option value="1">매우 낮음</option>
+                            <option value="2">낮음</option>
+                            <option value="3">보통</option>
+                            <option value="4">높음</option>
+                            <option value="5">매우 높음</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="number" name="OccurrenceCountermeasures[${index}].TimeToEffect"
+                                   class="form-control" placeholder="소요시간" min="0" required />
+                            <span class="input-group-text">분</span>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                onclick="removeItem(this, 'countermeasure-group')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        // 항목 삭제 함수
+        function removeItem(button, className) {
+            button.closest('.' + className).remove();
+        }
+    </script>
+}

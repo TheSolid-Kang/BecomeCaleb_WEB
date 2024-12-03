@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BecomeCaleb_WEB</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BecomeCaleb_WEB.styles.css" asp-append-version="true" />
@@ -23,19 +25,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="_TCDiary" asp-action="SearchKeywords">일기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="_TCDiary" asp-action="Index">Index</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FinancialLedger" asp-action="가계부">MonthlyUsageAmount</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="_TCDiary" asp-action="SearchKeywords">SearchKeywords</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="_TFBible" asp-action="Index">성경</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FinancialLedger" asp-action="MonthlyUsageAmount">MonthlyUsageAmount</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="_TFBible" asp-action="Index">Index</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Habit" asp-action="Index">습관</a>
                         </li>
                     </ul>
                 </div>

@@ -1,0 +1,48 @@
+﻿/* 기본 폼 스타일링 */
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+/* 섹션 카드 스타일링 */
+.section-card {
+    border: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+/* 섹션 헤더 스타일링 */
+.section-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 동적 추가되는 항목 스타일링 */
+.dynamic-item {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 입력 필드 그룹 스타일링 */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+/* 버튼 스타일링 */
+.action-button {
+    padding: 0.5rem 2rem;
+    transition: all 0.2s;
+}
+
+    .action-button:hover {
+        transform: translateY(-1px);
+    }

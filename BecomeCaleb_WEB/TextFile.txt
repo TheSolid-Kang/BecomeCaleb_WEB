@@ -1,0 +1,15 @@
+﻿<div class="form-group mb-3">
+    <label asp-for="OccurrenceRecord.HabitSeq" class="form-label fw-bold">극복하고자 하는 습관</label>
+    <select asp-for="OccurrenceRecord.HabitSeq" class="form-select" asp-items="ViewBag._TCHHabits">
+        <option value="">-- 선택해주세요 --</option>
+    </select>
+    <span asp-validation-for="OccurrenceRecord.HabitSeq" class="text-danger"></span>
+</div>
+
+
+
+
+
+
+
+

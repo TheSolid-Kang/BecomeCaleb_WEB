@@ -1,0 +1,45 @@
+﻿@model BecomeCaleb_WEB.Models.CalebHabitTbl._TCHOccurrenceRecord
+
+@{
+    ViewData["Title"] = "습관 삭제";
+}
+
+<h1>습관 삭제</h1>
+
+<h3>이 습관을 정말로 삭제하시겠습니까?</h3>
+<div>
+    <h4>습관</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OccurrenceDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OccurrenceDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LocationSeq)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocationSeq)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CleanPeriodDays)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CleanPeriodDays)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="OccurrenceSeq" />
+        <input type="submit" value="삭제" class="btn btn-danger" /> |
+        <a asp-action="Index">뒤로</a>
+    </form>
+</div>

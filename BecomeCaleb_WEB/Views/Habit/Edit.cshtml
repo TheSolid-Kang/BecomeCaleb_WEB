@@ -1,0 +1,43 @@
+﻿@model BecomeCaleb_WEB.Models.CalebHabitTbl._TCHOccurrenceRecord
+
+@{
+    ViewData["Title"] = "습관 편집";
+}
+
+<h1>습관 편집</h1>
+
+<h4>습관</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label asp-for="OccurrenceDateTime" class="control-label"></label>
+                <input asp-for="OccurrenceDateTime" class="form-control" />
+                <span asp-validation-for="OccurrenceDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationSeq" class="control-label"></label>
+                <input asp-for="LocationSeq" class="form-control" />
+                <span asp-validation-for="LocationSeq" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CleanPeriodDays" class="control-label"></label>
+                <input asp-for="CleanPeriodDays" class="form-control" />
+                <span asp-validation-for="CleanPeriodDays" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="저장" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">뒤로</a>
+</div>

@@ -9,9 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BecomeCaleb_WEBTest\**" />
     <Compile Remove="Views\Diary\**" />
+    <Content Remove="BecomeCaleb_WEBTest\**" />
     <Content Remove="Views\Diary\**" />
+    <EmbeddedResource Remove="BecomeCaleb_WEBTest\**" />
     <EmbeddedResource Remove="Views\Diary\**" />
+    <None Remove="BecomeCaleb_WEBTest\**" />
     <None Remove="Views\Diary\**" />
   </ItemGroup>
 

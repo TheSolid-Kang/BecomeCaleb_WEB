@@ -1,71 +1,84 @@
 ﻿{
-   "CodeGenerationMode": 3,
-   "ContextClassName": "TwoMitesContext",
-   "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
-   "FilterSchemas": false,
-   "IncludeConnectionString": true,
-   "ModelNamespace": null,
-   "OutputContextPath": null,
-   "OutputPath": "Models.TwoMitesTbl",
-   "PreserveCasingWithRegex": true,
-   "ProjectRootNamespace": "BecomeCaleb_WEB",
-   "Schemas": null,
-   "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 0,
-   "T4TemplatePath": null,
-   "Tables": [
-      {
-         "Name": "[dbo].[_TestTbl]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TestTbl２]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TFAMajor]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TFAMinor]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TFBible]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TFMajor]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TFMinor]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[_TFUser]",
-         "ObjectType": 0
-      }
-   ],
-   "UiHint": "c-1482.TwoMites.dbo",
-   "UncountableWords": null,
-   "UseBoolPropertiesWithoutDefaultSql": true,
-   "UseDatabaseNames": true,
-   "UseDateOnlyTimeOnly": false,
-   "UseDbContextSplitting": true,
-   "UseFluentApiOnly": false,
-   "UseHandleBars": true,
-   "UseHierarchyId": false,
-   "UseInflector": true,
-   "UseLegacyPluralizer": false,
-   "UseManyToManyEntity": true,
-   "UseNoDefaultConstructor": true,
-   "UseNoObjectFilter": true,
-   "UseNodaTime": false,
-   "UseNullableReferences": true,
-   "UseSchemaFolders": true,
-   "UseSchemaNamespaces": true,
-   "UseSpatial": false,
-   "UseT4": false
+  "CodeGenerationMode": 2,
+  "ContextClassName": "CalebHabitContext",
+  "ContextNamespace": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": true,
+  "ModelNamespace": null,
+  "OutputContextPath": null,
+  "OutputPath": "Models.CalebHabitTbl",
+  "PreserveCasingWithRegex": true,
+  "ProjectRootNamespace": "BecomeCaleb_WEB",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 0,
+  "T4TemplatePath": null,
+  "Tables": [
+    {
+      "Name": "[dbo].[_TCHActions]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHCorrelationFactors]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHCountermeasures]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHHabits]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHLocations]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHOccurrenceActions]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHOccurrenceCountermeasures]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHOccurrenceRecords]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHOccurrenceStates]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[_TCHStates]",
+      "ObjectType": 0
+    }
+  ],
+  "UiHint": null,
+  "UncountableWords": null,
+  "UseAsyncStoredProcedureCalls": true,
+  "UseBoolPropertiesWithoutDefaultSql": true,
+  "UseDatabaseNames": true,
+  "UseDatabaseNamesForRoutines": true,
+  "UseDateOnlyTimeOnly": false,
+  "UseDbContextSplitting": false,
+  "UseDecimalDataAnnotationForSprocResult": true,
+  "UseFluentApiOnly": false,
+  "UseHandleBars": true,
+  "UseHierarchyId": false,
+  "UseInflector": true,
+  "UseLegacyPluralizer": false,
+  "UseManyToManyEntity": true,
+  "UseNoDefaultConstructor": false,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": true,
+  "UsePrefixNavigationNaming": false,
+  "UseSchemaFolders": false,
+  "UseSchemaNamespaces": false,
+  "UseSpatial": false,
+  "UseT4": false,
+  "UseT4Split": false
 }
